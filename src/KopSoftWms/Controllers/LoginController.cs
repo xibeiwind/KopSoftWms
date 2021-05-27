@@ -64,13 +64,14 @@ namespace KopSoftWms.Controllers
             if (item.Item1)
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                
                 var claims = new List<Claim>
                   {
                       new Claim(ClaimTypes.Name, item.Item3.UserName),
                       new Claim(ClaimTypes.Sid,item.Item3.UserId.ToString()),
                       new Claim(ClaimTypes.Surname,item.Item3.UserNickname),
                       new Claim(ClaimTypes.Role,item.Item3.RoleId?.ToString()),
-                      new Claim(ClaimTypes.Uri,string.IsNullOrWhiteSpace(item.Item3.HeadImg)?Path.Combine("upload","head","4523c812eb2047c39ad91f8c5de3fb31.jpg"):item.Item3.HeadImg)
+                      new Claim(ClaimTypes.Uri,string.IsNullOrWhiteSpace(item.Item3.HeadImg)?"upload/head/4523c812eb2047c39ad91f8c5de3fb31.jpg":item.Item3.HeadImg)
                   };
                 var claimsIdentitys = new ClaimsIdentity(
                claims,
